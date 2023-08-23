@@ -7,14 +7,14 @@ function Customer() {
         <div className='container'>
             <div className='card'>
                 <div className='card-body'>
-                    <h4 className='card-title'>Register</h4>
+                    <h3 className='card-title'>Register</h3>
                     <RegisterForm />
                 </div>
             </div>
 
             <div className='card'>
                 <div className='card-body'>
-                    <h4 className='card-title'>Login</h4>
+                    <h3 className='card-title'>Login</h3>
                     <LoginForm />
                 </div>
             </div>
