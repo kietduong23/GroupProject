@@ -183,7 +183,7 @@ function Customer() {
                 <h2>My Shopping Cart</h2>
                 {shoppingCart.length > 0 ? (
                     <div className='container'>
-                        <div className="overflow-auto border" style={{ maxHeight: '350px' }}>
+                        <div>
                             <ShoppingCart
                                 products={shoppingCart}
                                 handleItemRemove={handleItemRemove}

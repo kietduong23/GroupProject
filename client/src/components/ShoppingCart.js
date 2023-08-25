@@ -17,7 +17,7 @@ function ShoppingCart({ products, handleItemRemove, handleItemIncrease, handleIt
 
     return (
         <>
-            <div className="cart-items">
+            <div className="cart-items overflow-auto border" style={{ height: '300px' }}>
                 {products.map((product) => 
                 <div className="p-2" key={product.id}>
                     <CartItem
