@@ -64,7 +64,7 @@ function Customer() {
     const handleAddToCart = (product) => {
         const existingProduct = shoppingCart.find((p) => p.id === product.id);
         if (existingProduct === undefined) {
-            const newCart = [...shoppingCart, {...product, quantity: 1}];
+            const newCart = [...shoppingCart, { ...product, quantity: 1 }];
             setShoppingCart(newCart);
             const newTotal = totalPrice + product.price;
             setTotalPrice(newTotal);
@@ -73,19 +73,31 @@ function Customer() {
     }
 
     const clearCart = () => {
+        setTotalPrice(0)
         setShoppingCart([])
     }
 
     const handleItemRemove = (itemID) => {
-        const newCart = shoppingCart.filter((item) => item.id !== itemID);
+        const newCart = shoppingCart.filter((item) => {
+            if (item.id !== itemID) {
+                return item;
+            } else {
+                setTotalPrice(totalPrice - (item.quantity * item.price))
+            }
+
+        });
         setShoppingCart(newCart);
+
+        if (newCart.length < 1) {
+            setTotalPrice(0)
+        }
     }
 
     const handleItemIncrease = (id) => {
         const newCart = shoppingCart.map((item) => {
             if (item.id === id) {
                 setTotalPrice(totalPrice + item.price)
-                return ({...item, quantity: item.quantity + 1})
+                return ({ ...item, quantity: item.quantity + 1 })
             }
         });
         setShoppingCart(newCart);
@@ -96,13 +108,13 @@ function Customer() {
                 if (item.quantity > 1) {
                     setTotalPrice(totalPrice - item.price)
                 }
-                return ({...item, quantity: (item.quantity > 1) ? (item.quantity - 1) : item.quantity})
+                return ({ ...item, quantity: (item.quantity > 1) ? (item.quantity - 1) : item.quantity })
             }
         });
         setShoppingCart(newCart);
     }
 
-    
+
 
 
 
@@ -172,12 +184,12 @@ function Customer() {
                     <div className='container'>
                         <div className="overflow-auto border" style={{ maxHeight: '350px' }}>
                             <ShoppingCart
-                            products={shoppingCart}
-                            handleItemRemove={handleItemRemove}
-                            handleItemIncrease={handleItemIncrease}
-                            handleItemDecrease={handleItemDecrease}
-                            clearCart={clearCart}
-                            totalPrice={totalPrice}
+                                products={shoppingCart}
+                                handleItemRemove={handleItemRemove}
+                                handleItemIncrease={handleItemIncrease}
+                                handleItemDecrease={handleItemDecrease}
+                                clearCart={clearCart}
+                                totalPrice={totalPrice}
                             />
                         </div>
                     </div>
