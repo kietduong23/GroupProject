@@ -83,14 +83,20 @@ function LoginForm() {
     </form>
   return (
     <>
-      <div className="form-group mb-2">
-        <label htmlFor="loginMethod">Select your login method</label>
-        <select onChange={onLoginMethodChange} className="form-control" id="loginMethod">
-          <option value="emailLogin" name="emailLogin">By email</option>
-          <option value="phoneLogin" name="phoneLogin">By phone number</option>
-        </select>
+      <div className='card'>
+        <div className='card-body'>
+          <h3 className='card-title'>Login</h3>
+          <div className="form-group mb-2">
+            <label htmlFor="loginMethod">Select your login method</label>
+            <select onChange={onLoginMethodChange} className="form-control" id="loginMethod">
+              <option value="emailLogin" name="emailLogin">By email</option>
+              <option value="phoneLogin" name="phoneLogin">By phone number</option>
+            </select>
+          </div>
+          {(loginMethod === 'emailLogin') ? emailLoginForm : phoneLoginForm}
+        </div>
       </div>
-      {(loginMethod === 'emailLogin') ? emailLoginForm : phoneLoginForm}
+
     </>
   )
 }
