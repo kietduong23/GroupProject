@@ -3,17 +3,17 @@ import CartItem from './CartItem'
 
 function ShoppingCart({ products, handleItemRemove, handleItemIncrease, handleItemDecrease, clearCart, totalPrice }) {
     
-    const handleRemove = (itemID) => {
-        handleItemRemove(itemID)
-    }
+    // const handleRemove = (itemID) => {
+    //     handleItemRemove(itemID)
+    // }
 
-    const handleQuantityIncrease = (id) => {
-        handleItemIncrease(id);
-    }
+    // const handleIncrease = (id) => {
+    //     handleItemIncrease(id);
+    // }
 
-    const handleQuantityDecrease = (id) => {
-        handleItemDecrease(id);
-    }
+    // const handleDecrease = (id) => {
+    //     handleItemDecrease(id);
+    // }
 
     return (
         <>
@@ -22,9 +22,9 @@ function ShoppingCart({ products, handleItemRemove, handleItemIncrease, handleIt
                 <div className="p-2" key={product.id}>
                     <CartItem
                     product={product}
-                    handleRemove={handleRemove}
-                    handleQuantityIncrease={handleQuantityIncrease}
-                    handleQuantityDecrease={handleQuantityDecrease}/>
+                    handleRemove={handleItemRemove}
+                    handleQuantityIncrease={handleItemIncrease}
+                    handleQuantityDecrease={handleItemDecrease}/>
                 </div>)}
             </div>
             <div className="cart-summary">

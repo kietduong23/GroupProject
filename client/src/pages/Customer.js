@@ -84,7 +84,6 @@ function Customer() {
             } else {
                 setTotalPrice(totalPrice - (item.quantity * item.price))
             }
-
         });
         setShoppingCart(newCart);
 
@@ -97,8 +96,9 @@ function Customer() {
         const newCart = shoppingCart.map((item) => {
             if (item.id === id) {
                 setTotalPrice(totalPrice + item.price)
-                return ({ ...item, quantity: item.quantity + 1 })
+                item.quantity = item.quantity + 1
             }
+            return ({ ...item })
         });
         setShoppingCart(newCart);
     }
@@ -107,9 +107,10 @@ function Customer() {
             if (item.id === id) {
                 if (item.quantity > 1) {
                     setTotalPrice(totalPrice - item.price)
+                    item.quantity = item.quantity - 1
                 }
-                return ({ ...item, quantity: (item.quantity > 1) ? (item.quantity - 1) : item.quantity })
             }
+            return ({ ...item })
         });
         setShoppingCart(newCart);
     }
