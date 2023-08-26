@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { doLogin } from '../api/customers'
+import { AuthContext } from '../contexts/AuthContext';
 
 function LoginForm() {
   const [loginData, setLoginData] = useState(
@@ -22,19 +23,17 @@ function LoginForm() {
     // console.log(loginData);
   }
 
+  const { doCustomerLogin } = useContext(AuthContext);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // Call login API
-    console.log(loginData);
-    console.log("Checking login...");
-    const res = await doLogin(loginData);
-    if (res.success === true) {
+    try {
+      const res = await doCustomerLogin(loginData);
       setMessage(res.message);
-      console.log(res);
-    } else {
-      setMessage(res.message);
-      console.log(res);
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -86,7 +85,7 @@ function LoginForm() {
     </form>
   return (
     <>
-      <div className='card' style={{width: '400px'}}>
+      <div className='card' style={{ width: '400px' }}>
         <div className='card-body'>
           <h3 className='card-title'>Customer Login</h3>
           <div className="form-group mb-2">

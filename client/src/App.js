@@ -3,15 +3,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Customer from './pages/Customer';
 import ProductsContextProvider from './contexts/ProductContext';
 import ShoppingCartContextProvider from './contexts/ShoppingCartContext';
+import AuthContextProvider from './contexts/AuthContext';
 
 function App() {
   return (
     <>
-      <ProductsContextProvider>
-        <ShoppingCartContextProvider>
-          <Customer />
-        </ShoppingCartContextProvider>
-      </ProductsContextProvider>
+      <AuthContextProvider>
+        <ProductsContextProvider>
+          <ShoppingCartContextProvider>
+            <Customer />
+          </ShoppingCartContextProvider>
+        </ProductsContextProvider>
+      </AuthContextProvider>
     </>
   );
 }
