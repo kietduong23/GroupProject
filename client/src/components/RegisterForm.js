@@ -24,9 +24,9 @@ function RegisterForm() {
     }
 
     return (
-        <div className='card'>
+        <div className='card' style={{width: '400px'}}>
             <div className='card-body'>
-                <h3 className='card-title'>Register</h3>
+                <h3 className='card-title'>Customer Register</h3>
                 <form onSubmit={handleRegister}>
                     <div className="form-group mb-2">
                         <label htmlFor="email">Enter your email address:</label>

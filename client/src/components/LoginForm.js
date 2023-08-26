@@ -11,7 +11,8 @@ function LoginForm() {
     }
   )
 
-  const [loginMethod, setloginMethod] = useState('emailLogin')
+  const [loginMethod, setloginMethod] = useState('emailLogin');
+  const [message, setMessage] = useState('')
 
   const onLoginDataChange = (e) => {
     setLoginData({
@@ -29,8 +30,10 @@ function LoginForm() {
     console.log("Checking login...");
     const res = await doLogin(loginData);
     if (res.success === true) {
-      console.log(res)
+      setMessage(res.message);
+      console.log(res);
     } else {
+      setMessage(res.message);
       console.log(res);
     }
   }
@@ -83,9 +86,9 @@ function LoginForm() {
     </form>
   return (
     <>
-      <div className='card'>
+      <div className='card' style={{width: '400px'}}>
         <div className='card-body'>
-          <h3 className='card-title'>Login</h3>
+          <h3 className='card-title'>Customer Login</h3>
           <div className="form-group mb-2">
             <label htmlFor="loginMethod">Select your login method</label>
             <select onChange={onLoginMethodChange} className="form-control" id="loginMethod">
@@ -94,6 +97,7 @@ function LoginForm() {
             </select>
           </div>
           {(loginMethod === 'emailLogin') ? emailLoginForm : phoneLoginForm}
+          <div className='message'>{message}</div>
         </div>
       </div>
 
