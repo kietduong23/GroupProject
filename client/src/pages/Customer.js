@@ -66,68 +66,102 @@ function Customer() {
         if (existingProduct === undefined) {
             const newCart = [...shoppingCart, { ...product, quantity: 1 }];
             setShoppingCart(newCart);
-            const newTotal = totalPrice + product.price;
+            let newTotal = totalPrice + product.price;
             setTotalPrice(newTotal);
             // console.log(shoppingCart)
+            saveShoppingCart(newCart, newTotal);
         }
     }
 
-    const clearCart = () => {
-        setTotalPrice(0)
-        setShoppingCart([])
+    const handleClearCart = () => {
+        setTotalPrice(0);
+        setShoppingCart([]);
+        localStorage.removeItem("MY_SHOPPING_CART")
     }
 
     const handleItemRemove = (itemID) => {
+        let newTotal = totalPrice;
         const newCart = shoppingCart.filter((item) => {
             if (item.id !== itemID) {
                 return item;
             } else {
-                setTotalPrice(totalPrice - (item.quantity * item.price))
+                newTotal = totalPrice - (item.quantity * item.price);
+                setTotalPrice(newTotal);
             }
         });
         setShoppingCart(newCart);
-
+        saveShoppingCart(newCart, newTotal);
         if (newCart.length < 1) {
-            setTotalPrice(0)
+            setTotalPrice(0);
+            localStorage.removeItem("MY_SHOPPING_CART");
         }
     }
 
     const handleItemIncrease = (id) => {
+        let newTotal = totalPrice
         const newCart = shoppingCart.map((item) => {
             if (item.id === id) {
-                setTotalPrice(totalPrice + item.price)
-                item.quantity = item.quantity + 1
+                newTotal = totalPrice + item.price;
+                setTotalPrice(newTotal);
+                item.quantity = item.quantity + 1;
             }
-            return ({ ...item })
+            return ({ ...item });
         });
         setShoppingCart(newCart);
+        saveShoppingCart(newCart, newTotal);
     }
     const handleItemDecrease = (id) => {
+        let newTotal = totalPrice;
         const newCart = shoppingCart.map((item) => {
             if (item.id === id) {
                 if (item.quantity > 1) {
-                    setTotalPrice(totalPrice - item.price)
-                    item.quantity = item.quantity - 1
+                    newTotal = totalPrice - item.price;
+                    setTotalPrice(newTotal);
+                    item.quantity = item.quantity - 1;
                 }
             }
             return ({ ...item })
         });
         setShoppingCart(newCart);
+        saveShoppingCart(newCart, newTotal)
     }
 
+    const handlePlaceOrder = () => {
 
+    }
+    
+    // Function to save shopping cart in Local Storage
+    const saveShoppingCart = (shoppingCart, totalPrice) => {
+        //Create new cart
+        const newCart = { items: shoppingCart, totalPrice: totalPrice }
+        console.log(newCart)
+        // Convert to JSON
+        const data = JSON.stringify(newCart);
+        // Store new data in Local Storage
+        localStorage.setItem("MY_SHOPPING_CART", data);
+    }
 
+    const loadShoppingCart = () => {
+        if (localStorage.getItem("MY_SHOPPING_CART") !== null) {
+            const jsonData = localStorage.getItem("MY_SHOPPING_CART");
+            const shoppingCart = JSON.parse(jsonData);
+            const items = shoppingCart.items;
+            setShoppingCart(items);
+        } else {
+            setShoppingCart([]);
+        }
+    }
 
+    useEffect(loadShoppingCart, []);
 
     return (
-        <div className='container filter-products-main-box'>
-
-            {/* <div className='container'>
+        <div className='container'>
+            <div className='container'>
                 <RegisterForm />
             </div>
             <div className='container'>
                 <LoginForm />
-            </div> */}
+            </div>
 
             <div className='container filter-box'>
                 <h3>Filter by category</h3>
@@ -181,21 +215,19 @@ function Customer() {
 
             <div className='container shopping-cart'>
                 <h2>My Shopping Cart</h2>
-                {shoppingCart.length > 0 ? (
-                    <div className='container'>
-                        <div>
-                            <ShoppingCart
-                                products={shoppingCart}
-                                handleItemRemove={handleItemRemove}
-                                handleItemIncrease={handleItemIncrease}
-                                handleItemDecrease={handleItemDecrease}
-                                clearCart={clearCart}
-                                totalPrice={totalPrice}
-                            />
-                        </div>
+                <div className='container'>
+                    <div>
+                        <ShoppingCart
+                            products={shoppingCart}
+                            handleItemRemove={handleItemRemove}
+                            handleItemIncrease={handleItemIncrease}
+                            handleItemDecrease={handleItemDecrease}
+                            handleClearCart={handleClearCart}
+                            handlePlaceOrder={handlePlaceOrder}
+                            totalPrice={totalPrice}
+                        />
                     </div>
-                ) : (<div>Your cart is empty</div>)}
-
+                </div>
             </div>
         </div>
     );
