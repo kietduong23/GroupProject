@@ -21,7 +21,7 @@ const customers = [
 
 export const doLogin = async (loginData) => {
     const { email, phone, password, loginMethod } = loginData;
-    
+
     return new Promise(function (resolve) {
         setTimeout(() => {
             let customer = undefined;

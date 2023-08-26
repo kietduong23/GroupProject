@@ -1,9 +1,7 @@
 import React, { Children, useEffect, useState } from 'react'
 import { createContext } from "react";
 
-
 export const ShoppingCartContext = createContext();
-
 
 const ShoppingCartContextProvider = ({ children }) => {
     const [shoppingCart, setShoppingCart] = useState([]);
@@ -30,7 +28,7 @@ const ShoppingCartContextProvider = ({ children }) => {
     useEffect(() => loadShoppingCart, []);
 
     const saveShoppingCart = (shoppingCart) => {
-        console.log(shoppingCart)
+        console.log(shoppingCart);
         // Convert to JSON
         const cartData = JSON.stringify(shoppingCart);
         // Store new data in Local Storage
@@ -52,7 +50,7 @@ const ShoppingCartContextProvider = ({ children }) => {
     const handleClearCart = () => {
         setTotalPrice(0);
         setShoppingCart([]);
-        localStorage.removeItem(SHOPPING_CART_NAME)
+        localStorage.removeItem(SHOPPING_CART_NAME);
     }
 
     const handleItemRemove = (productID) => {
@@ -100,7 +98,7 @@ const ShoppingCartContextProvider = ({ children }) => {
             return ({ ...item })
         });
         setShoppingCart(newCart);
-        saveShoppingCart(newCart)
+        saveShoppingCart(newCart);
     }
 
     const handlePlaceOrder = () => {

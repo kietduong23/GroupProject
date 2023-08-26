@@ -4,9 +4,12 @@ import LoginForm from '../components/LoginForm'
 import ProductCard from '../components/ProductCard'
 import ShoppingCart from '../components/ShoppingCart'
 import { ProductContext } from '../contexts/ProductContext'
+import { AuthContext } from '../contexts/AuthContext'
 
 function Customer() {
     const { products } = useContext(ProductContext);
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
 
     const [spans] = useState([
         { id: 'SmartPhones', text: 'Smart Phones' },
@@ -53,10 +56,12 @@ function Customer() {
         <div className='container'>
             {/* <div className='container'>
                 <RegisterForm />
-            </div>
+            </div> */}
             <div className='container'>
                 <LoginForm />
-            </div> */}
+            </div>
+
+            <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
 
             <div className='container filter-box'>
                 <h3>Filter by category</h3>
@@ -78,7 +83,7 @@ function Customer() {
                             <div className='products-box row-cols-1 row-cols-sm-2 row-cols-lg-3'>
                                 {filteredProducts.map(product => (
                                     <div className="p-3" key={product.id}>
-                                        <ProductCard className="col" product={product}/>
+                                        <ProductCard className="col" product={product} />
                                     </div>
                                 ))}
                             </div>
@@ -94,7 +99,7 @@ function Customer() {
                                     <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
                                         {products.map(product => (
                                             <div className="p-3" key={product.id}>
-                                                <ProductCard className="col" product={product}/>
+                                                <ProductCard className="col" product={product} />
                                             </div>
                                         ))}
                                     </div>
@@ -112,7 +117,7 @@ function Customer() {
                 <h2>My Shopping Cart</h2>
                 <div className='container'>
                     <div>
-                        <ShoppingCart/>
+                        <ShoppingCart />
                     </div>
                 </div>
             </div>
