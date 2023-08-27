@@ -1,11 +1,14 @@
-import React, { Children, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createContext } from "react";
 
-export const ShoppingCartContext = createContext();
+export const CustomerContext = createContext();
 
-const ShoppingCartContextProvider = ({ children }) => {
+const CustomerContextProvider = ({ children }) => {
     const [shoppingCart, setShoppingCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+
+
+    const [orders, setOrders] = useState([]);
 
     const SHOPPING_CART_NAME = "MY_SHOPPING_CART";
 
@@ -29,10 +32,15 @@ const ShoppingCartContextProvider = ({ children }) => {
 
     const saveShoppingCart = (shoppingCart) => {
         console.log(shoppingCart);
-        // Convert to JSON
-        const cartData = JSON.stringify(shoppingCart);
-        // Store new data in Local Storage
-        localStorage.setItem(SHOPPING_CART_NAME, cartData);
+        if (shoppingCart.length < 1) {
+            localStorage.removeItem(SHOPPING_CART_NAME);
+            setTotalPrice(0);
+        } else {
+            // Convert to JSON
+            const cartData = JSON.stringify(shoppingCart);
+            // Store new data in Local Storage
+            localStorage.setItem(SHOPPING_CART_NAME, cartData);
+        }
     }
 
     const handleAddToCart = (product) => {
@@ -61,14 +69,11 @@ const ShoppingCartContextProvider = ({ children }) => {
             } else {
                 newTotal = totalPrice - (item.quantity * item.product.price);
                 setTotalPrice(newTotal);
+                return null;
             }
         });
         setShoppingCart(newCart);
         saveShoppingCart(newCart);
-        if (newCart.length < 1) {
-            setTotalPrice(0);
-            localStorage.removeItem(SHOPPING_CART_NAME);
-        }
     }
 
     const handleItemIncrease = (productID) => {
@@ -101,23 +106,47 @@ const ShoppingCartContextProvider = ({ children }) => {
         saveShoppingCart(newCart);
     }
 
-    const handlePlaceOrder = () => {
-
+    const loadOrders = () => {
+        //This is for testing
+        const orders = [{
+            items: [{
+                product: { id: 1, name: "iPhone", img: "https://techland.com.vn/wp-content/uploads/2021/09/iphone-13-pink-select-2021.png", price: 1000, description: "Apple iPhone", category: "Smart Phones" },
+                quantity: 1
+            }],
+            status: 'Shipped'
+        }]
+        setOrders(orders);
     }
 
-    const shoppingCartData = {
+    useEffect(() => loadOrders, []);
+ 
+    const handlePlaceOrder = () => {
+        const newOrder = {
+            items: shoppingCart,
+            status: 'New'
+        }
+        const newOrderList = [...orders, newOrder];
+        setOrders(newOrderList);
+        setShoppingCart([]);
+        saveShoppingCart([]);
+        console.log(newOrderList);
+    }
+
+    const customerData = {
         shoppingCart,
         totalPrice,
+        orders,
         handleAddToCart,
         handleClearCart,
         handleItemRemove,
-        handleItemIncrease, 
+        handleItemIncrease,
         handleItemDecrease,
+        handlePlaceOrder,
         handlePlaceOrder
     }
     return (
-        <ShoppingCartContext.Provider value={shoppingCartData}>{children}</ShoppingCartContext.Provider>
+        <CustomerContext.Provider value={customerData}>{children}</CustomerContext.Provider>
     )
 }
 
-export default ShoppingCartContextProvider
+export default CustomerContextProvider

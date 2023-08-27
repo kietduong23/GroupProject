@@ -5,6 +5,7 @@ import ProductCard from '../components/ProductCard'
 import ShoppingCart from '../components/ShoppingCart'
 import { ProductContext } from '../contexts/ProductContext'
 import { AuthContext } from '../contexts/AuthContext'
+import Orders from '../components/Orders'
 
 function Customer() {
     const { products } = useContext(ProductContext);
@@ -118,6 +119,15 @@ function Customer() {
                 <div className='container'>
                     <div>
                         <ShoppingCart />
+                    </div>
+                </div>
+            </div>
+
+            <div className='container orders'>
+                <h2>My order list</h2>
+                <div className='container'>
+                    <div>
+                        <Orders/>
                     </div>
                 </div>
             </div>

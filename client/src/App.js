@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Customer from './pages/Customer';
 import ProductsContextProvider from './contexts/ProductContext';
-import ShoppingCartContextProvider from './contexts/ShoppingCartContext';
+import CustomerContextProvider from './contexts/CustomerContext';
 import AuthContextProvider from './contexts/AuthContext';
 
 function App() {
@@ -10,9 +10,9 @@ function App() {
     <>
       <AuthContextProvider>
         <ProductsContextProvider>
-          <ShoppingCartContextProvider>
+          <CustomerContextProvider>
             <Customer />
-          </ShoppingCartContextProvider>
+          </CustomerContextProvider>
         </ProductsContextProvider>
       </AuthContextProvider>
     </>

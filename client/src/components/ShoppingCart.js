@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import CartItem from './CartItem'
-import { ShoppingCartContext } from '../contexts/ShoppingCartContext'
+import { CustomerContext } from '../contexts/CustomerContext'
 
 function ShoppingCart() {
     const {
@@ -8,7 +8,7 @@ function ShoppingCart() {
         totalPrice,
         handleClearCart,
         handlePlaceOrder
-    } = useContext(ShoppingCartContext);
+    } = useContext(CustomerContext);
     return (
         <>
             <div className="cart-items overflow-auto border" style={{ height: '250px' }}>

@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import { ShoppingCartContext } from '../contexts/ShoppingCartContext'
+import { CustomerContext } from '../contexts/CustomerContext'
 
 function CartItem({ product, quantity }) {
     const {
         handleItemIncrease,
         handleItemDecrease,
         handleItemRemove
-    } = useContext(ShoppingCartContext)
+    } = useContext(CustomerContext)
 
     return (
         <div className='container card' key={product.id} style={{ width: '700px', height:'200px'}}>

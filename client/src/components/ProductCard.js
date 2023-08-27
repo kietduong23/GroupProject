@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
+import { CustomerContext } from '../contexts/CustomerContext';
 
 function ProductCard({ product }) {
-    const {handleAddToCart} = useContext(ShoppingCartContext);
+    const {handleAddToCart} = useContext(CustomerContext);
     return (
         <div className="product card">
             <img src={product.img} alt="product-img" className='card-img-top p-2' style={{ height: '400px' }}></img>
