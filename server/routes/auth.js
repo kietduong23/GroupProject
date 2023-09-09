@@ -36,6 +36,41 @@ router.post('/register/customer', async (req, res) => {
     }
 })
 
+router.post('/login/customer', async (req, res) => {
+    const { phone, email, password, loginMethod } = req.body
+
+    if (loginMethod == 'emailLogin') {
+        try {
+            const customer = await Customer.findOne({ email: email })
+            if (!customer) {
+                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
+            }
+            if (customer.password !== password) {
+                return res.status(400).json({ success: false, msg: 'Invalid username or password' })
+            }
+            res.json({ success: true, msg: 'Successfully logged in', customer })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, msg: 'Server error' })
+        }
+    }
+    if (loginMethod == 'phoneLogin') {
+        try {
+            const customer = await Customer.findOne({ phone: phone })
+            if (!customer) {
+                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
+            }
+            if (customer.password !== password) {
+                return res.status(400).json({ success: false, msg: 'Invalid username or password' })
+            }
+            res.json({ success: true, msg: 'Successfully logged in', customer })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, msg: 'Server error' })
+        }
+    }
+})
+
 router.post('/register/seller', async (req, res) => {
     const { name, email, password, businessName, phone } = req.body
 

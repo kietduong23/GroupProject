@@ -5,15 +5,17 @@ import ProductCard from '../components/ProductCard'
 import ShoppingCart from '../components/ShoppingCart'
 import { ProductContext } from '../contexts/ProductContext'
 import { AuthContext } from '../contexts/AuthContext'
-import Orders from '../components/Orders'
+import OrderList from '../components/OrderList'
+import { CustomerContext } from '../contexts/CustomerContext'
 
 function Customer() {
     const { products } = useContext(ProductContext);
     const { authState } = useContext(AuthContext);
+
     const { user } = authState;
 
     const [spans] = useState([
-        { id: 'SmartPhones', text: 'Smart Phones' },
+        { id: 'MobileDevice', text: 'Mobile device' },
         { id: 'Appliances', text: 'Appliances' },
         { id: 'Earphones', text: 'Earphones' },
         { id: 'Clothes', text: 'Clothes' },
@@ -52,6 +54,7 @@ function Customer() {
         setCategory('');
         setFilteredProducts([]);
     }
+    
 
     return (
         <div className='container'>
@@ -83,7 +86,7 @@ function Customer() {
                         <div className="container">
                             <div className='products-box row-cols-1 row-cols-sm-2 row-cols-lg-3'>
                                 {filteredProducts.map(product => (
-                                    <div className="p-3" key={product.id}>
+                                    <div className="p-3" key={product._id}>
                                         <ProductCard className="col" product={product} />
                                     </div>
                                 ))}
@@ -118,16 +121,16 @@ function Customer() {
                 <h2>My Shopping Cart</h2>
                 <div className='container'>
                     <div>
-                        <ShoppingCart />
+                        <ShoppingCart/>
                     </div>
                 </div>
             </div>
 
             <div className='container orders'>
-                <h2>My order list</h2>
+                <h2>My Order List</h2>
                 <div className='container'>
                     <div>
-                        <Orders/>
+                        <OrderList/>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ function ProductCard({ product }) {
     const {handleAddToCart} = useContext(CustomerContext);
     return (
         <div className="product card">
-            <img src={product.img} alt="product-img" className='card-img-top p-2' style={{ height: '400px' }}></img>
+            <img src={product.imgURL} alt="product-img" className='card-img-top p-2' style={{ height: '400px' }}></img>
             <div className='card-body flex-fill'>
                 <div className="product-text title card-title"> {product.name} </div>
                 <div className='product-text description card-text'>{product.description}</div>

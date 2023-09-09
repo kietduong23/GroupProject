@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/:customerID", async (req, res) => {
     const customerID = req.params.customerID;
     try {
-        const orders = await find({customer: customerID});
+        const orders = await Customer.find({customer: customerID});
         res.json({ success: true, msg: `Retrieved all orders of customer ${customerID}`, orders });
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });
@@ -23,11 +23,11 @@ router.post("/", async (req, res) => {
             customer: customerID,
             status: "new"
         });
+        await newOrder.save();
         customer.orders = [...customer.orders, newOrder];
         customer.shoppingCart = [];
-        await newOrder.save();
         await customer.save();
-        res.json({ success: true, msg: 'New order created', newOrder });
+        res.json({ success: true, msg: 'New order created' , newOrder});
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });
     }

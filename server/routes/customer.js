@@ -19,7 +19,10 @@ router.get('/:customerID', async (req, res) => {
 router.get("/:customerID/cart", async (req, res) => {
     const customerID = req.params.customerID;
     try {
-        const customer = await Customer.findById(customerID);
+        const customer = await Customer.findById(customerID).populate({
+            path: 'shoppingCart',
+            populate: { path: 'product' }
+        });
         res.json({ success: true, msg: 'Retrieved shopping cart', shoppingCart: customer.shoppingCart });
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });
@@ -32,7 +35,7 @@ router.delete("/:customerID/cart", async (req, res) => {
     try {
         const customer = await Customer.findById(customerID);
         for (let item of customer.shoppingCart) {
-            await CartItem.deleteOne({_id: item._id});
+            await CartItem.deleteOne({ _id: item._id });
         }
         customer.shoppingCart = [];
         await customer.save();
@@ -44,24 +47,24 @@ router.delete("/:customerID/cart", async (req, res) => {
 
 // Add new item to shopping cart
 router.post("/:customerID/cart", async (req, res) => {
-    const { productID, quantity } = req.body;
+    const { productID } = req.body;
     const customerID = req.params.customerID;
     try {
         const customer = await Customer.findById(customerID).populate("shoppingCart");
         for (let item of customer.shoppingCart) {
-            if (item.product == productID ) {
+            if (item.product == productID) {
                 return res.status(400).json({ success: false, msg: 'Product already existed' });
             }
         }
         const newItem = new CartItem({
             product: productID,
-            quantity: quantity
+            quantity: 1
         });
         customer.shoppingCart = [...customer.shoppingCart, newItem];
         await customer.save();
         await newItem.save();
-
-        res.json({ success: true, msg: 'New cart item added', newItem });
+        const item = await CartItem.find({product: productID}).populate("product");
+        res.json({ success: true, msg: 'New cart item added', item });
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });
     }
@@ -72,7 +75,7 @@ router.put("/:customerID/cart/:cartItemID", async (req, res) => {
     const { quantity } = req.body;
     const cartItemID = req.params.cartItemID;
     try {
-        
+
         const cartItem = await CartItem.findById(cartItemID);
         cartItem.quantity = quantity;
         await cartItem.save();
@@ -87,9 +90,9 @@ router.delete("/:customerID/cart/:cartItemID", async (req, res) => {
     const customerID = req.params.customerID;
     const cartItemID = req.params.cartItemID;
     try {
-        await CartItem.deleteOne({_id: cartItemID});
+        await CartItem.deleteOne({ _id: cartItemID });
         const customer = await Customer.findById(customerID);
-        customer.shoppingCart =  customer.shoppingCart.filter((item) => item._id != cartItemID)
+        customer.shoppingCart = customer.shoppingCart.filter((item) => item._id != cartItemID)
         await customer.save();
         res.json({ success: true, msg: 'Cart item is deleted' });
     } catch (error) {
@@ -98,10 +101,17 @@ router.delete("/:customerID/cart/:cartItemID", async (req, res) => {
 })
 
 // Get all orders of customer
-router.get("/:customerID/orders", async (req, res) => {
-    const {customerID} = req.params.customerID;
+router.get("/:customerID/order", async (req, res) => {
+    const customerID  = req.params.customerID;
     try {
-        const customer = await Customer.findById(customerID);
+        const customer = await Customer.findOne({_id: customerID}).populate({
+            path: 'orders',
+            populate: { 
+                path: 'cartItems',
+                populate: 'product'
+            }
+        });
+        // const orders = customer.orders;
         res.json({ success: true, msg: `Retrieved all orders of customer ${customerID}`, orders: customer.orders });
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });

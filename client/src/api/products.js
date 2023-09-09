@@ -11,10 +11,3 @@ const products = [
     { id: 10, name: "Earphones 2", img: "https://cdn1.vectorstock.com/i/1000x1000/99/85/headphone-black-music-earphone-or-gaming-headset-vector-35439985.jpg", price: 30, description: "example", category: "Earphones" }
 ]
 
-export const getAllProducts = async () => {
-    return new Promise(function (resolve) {
-        setTimeout(() => {
-            resolve(products);
-        }, 1000);
-    });
-}

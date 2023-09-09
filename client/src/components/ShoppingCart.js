@@ -13,10 +13,9 @@ function ShoppingCart() {
         <>
             <div className="cart-items overflow-auto border" style={{ height: '250px' }}>
                 {(shoppingCart.length > 0) ? shoppingCart.map((item) => 
-                <div className="p-2" key={item.product.id}>
+                <div className="p-2" key={item._id}>
                     <CartItem
-                    product={item.product}
-                    quantity={item.quantity}
+                    item={item}
                     />
                 </div>) : (<div>Your cart is empty</div>)}
             </div>
@@ -25,7 +24,7 @@ function ShoppingCart() {
             </div>
             <div className="">
                 <button className='btn btn-danger' onClick={() => handleClearCart()}>Clear cart</button>
-                <button className='btn btn-primary' onClick={() => handlePlaceOrder()}>Place an order</button>
+                <button className='btn btn-primary' onClick={() => handlePlaceOrder()}>Place order</button>
             </div>
         </>
     )

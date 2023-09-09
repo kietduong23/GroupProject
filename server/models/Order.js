@@ -14,8 +14,7 @@ const orderScheme = new mongoose.Schema(
         },
         status: {
             type: String,
-            required: true,
-            unique: true
+            required: true
         }
     }
 );
