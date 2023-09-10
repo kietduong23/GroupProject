@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Customer = require("../models/Customer");
 const Seller = require("../models/Seller");
-const verifyToken = require('../middlewares/auth.');
+const verifyToken = require('../middlewares/auth');
 const jwt = require('jsonwebtoken')
 
 router.post('/register/customer', async (req, res) => {
