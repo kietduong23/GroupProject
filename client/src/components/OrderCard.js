@@ -22,7 +22,7 @@ function OrderCard({ items, status }) {
                             <button className='btn btn-success'>Accept</button>
                             <button className='btn btn-danger'>Reject</button>
                         </div>
-                    ) : (<div className=''>Your order has been processed</div>)}
+                    ) : (<div className=''>Your order has been processing</div>)}
                 </div>
             </div>
         </div>

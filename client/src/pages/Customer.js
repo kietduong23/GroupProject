@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import RegisterForm from '../components/RegisterForm'
+// import RegisterForm from '../components/RegisterForm'
 import LoginForm from '../components/LoginForm'
 import ProductCard from '../components/ProductCard'
 import ShoppingCart from '../components/ShoppingCart'
 import { ProductContext } from '../contexts/ProductContext'
 import { AuthContext } from '../contexts/AuthContext'
 import OrderList from '../components/OrderList'
-import { CustomerContext } from '../contexts/CustomerContext'
+// import { CustomerContext } from '../contexts/CustomerContext'
 
 function Customer() {
     const { products } = useContext(ProductContext);
