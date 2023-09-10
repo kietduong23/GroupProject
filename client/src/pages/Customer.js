@@ -6,12 +6,12 @@ import ShoppingCart from '../components/ShoppingCart'
 import { ProductContext } from '../contexts/ProductContext'
 import { AuthContext } from '../contexts/AuthContext'
 import OrderList from '../components/OrderList'
-// import { CustomerContext } from '../contexts/CustomerContext'
+import { CustomerContext } from '../contexts/CustomerContext'
 
 function Customer() {
     const { products } = useContext(ProductContext);
     const { authState } = useContext(AuthContext);
-
+    const { handleCustomerLogout } = useContext(CustomerContext)
     const { user } = authState;
 
     const [spans] = useState([
@@ -55,6 +55,7 @@ function Customer() {
         setFilteredProducts([]);
     }
     
+    const handleLogout = () => handleCustomerLogout()
 
     return (
         <div className='container'>
@@ -66,7 +67,7 @@ function Customer() {
             </div>
 
             <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
-
+            <div className="container">{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
             <div className='container filter-box'>
                 <h3>Filter by category</h3>
                 <ul>

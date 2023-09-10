@@ -3,17 +3,28 @@ import { createContext } from "react";
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 const API_URL = 'http://localhost:8000';
+const SHOPPING_CART_NAME = "MY-SHOPPING-CART";
 
 export const CustomerContext = createContext();
 
 const CustomerContextProvider = ({ children }) => {
-    const { authState } = useContext(AuthContext);
+    const { authState, doLogout } = useContext(AuthContext);
     const { user } = authState;
     const [shoppingCart, setShoppingCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [orders, setOrders] = useState([]);
 
-    const SHOPPING_CART_NAME = "MY_SHOPPING_CART";
+    useEffect(() => {
+        if (user !== null) {
+            setShoppingCart(user.shoppingCart);
+            let currentTotalPrice = 0;
+            user.shoppingCart.forEach(item => {
+                currentTotalPrice += item.product.price * item.quantity;
+            });
+            setTotalPrice(currentTotalPrice);
+            setOrders(user.orders);
+        }
+    }, [user])
 
     const loadShoppingCart = async () => {
         try {
@@ -59,7 +70,13 @@ const CustomerContextProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => loadShoppingCart, [user]);
+    // useEffect(() => loadShoppingCart, [user]);
+    const handleCustomerLogout = () => {
+        doLogout();
+        setShoppingCart([]);
+        setTotalPrice(0)
+        setOrders([])
+    }
 
     const saveShoppingCart = (shoppingCart) => {
         // console.log(shoppingCart);
@@ -94,7 +111,6 @@ const CustomerContextProvider = ({ children }) => {
                 // setShoppingCart([...shoppingCart, newCartItem]);
                 let newTotal = totalPrice + newCartItem.product.price;
                 setTotalPrice(newTotal);
-                loadShoppingCart();
                 // saveShoppingCart(newCart);
             }
             return res.data;
@@ -274,7 +290,7 @@ const CustomerContextProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => loadOrders, [user]);
+    // useEffect(() => loadOrders, [user]);
 
     // const handlePlaceOrder = () => {
     //     const newOrder = {
@@ -320,7 +336,8 @@ const CustomerContextProvider = ({ children }) => {
         handleItemIncrease,
         handleItemDecrease,
         handlePlaceOrder,
-        handlePlaceOrder
+        handlePlaceOrder,
+        handleCustomerLogout
     }
     return (
         <CustomerContext.Provider value={customerData}>{children}</CustomerContext.Provider>

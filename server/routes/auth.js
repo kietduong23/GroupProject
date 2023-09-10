@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Customer = require("../models/Customer");
 const Seller = require("../models/Seller");
+const verifyToken = require('../middlewares/auth.');
+const jwt = require('jsonwebtoken')
 
 router.post('/register/customer', async (req, res) => {
     const { name, email, password, address, phone } = req.body
@@ -36,19 +38,22 @@ router.post('/register/customer', async (req, res) => {
     }
 })
 
+const SECRET_KEY = 'Group16';
+
 router.post('/login/customer', async (req, res) => {
     const { phone, email, password, loginMethod } = req.body
 
     if (loginMethod == 'emailLogin') {
         try {
-            const customer = await Customer.findOne({ email: email })
+            const customer = await Customer.findOne({ email: email });
             if (!customer) {
                 return res.status(400).json({ success: false, msg: 'Invalid email or password' })
             }
             if (customer.password !== password) {
-                return res.status(400).json({ success: false, msg: 'Invalid username or password' })
+                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
             }
-            res.json({ success: true, msg: 'Successfully logged in', customer })
+            const accessToken = jwt.sign({ userID: customer._id }, SECRET_KEY)
+            res.json({ success: true, msg: 'Successfully logged in', accessToken })
         } catch (error) {
             console.log(error)
             res.status(500).json({ success: false, msg: 'Server error' })
@@ -58,16 +63,43 @@ router.post('/login/customer', async (req, res) => {
         try {
             const customer = await Customer.findOne({ phone: phone })
             if (!customer) {
-                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
+                return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
             }
             if (customer.password !== password) {
-                return res.status(400).json({ success: false, msg: 'Invalid username or password' })
+                return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
             }
-            res.json({ success: true, msg: 'Successfully logged in', customer })
+            const accessToken = jwt.sign({ userID: customer._id }, SECRET_KEY)
+            res.json({ success: true, msg: 'Successfully logged in', accessToken })
         } catch (error) {
             console.log(error)
             res.status(500).json({ success: false, msg: 'Server error' })
         }
+    }
+})
+
+router.get('/', verifyToken, async (req, res) => {
+    try {
+        const customer = await Customer.findById(req.userID).populate([
+            {
+                path: 'shoppingCart',
+                populate: { path: 'product' }
+            },
+            {
+                path: 'orders',
+                populate: {
+                    path: 'cartItems',
+                    populate: { path: 'product' }
+                }
+            }
+        ]);
+        if (customer) {
+            res.json({ success: true, msg: 'Authorized user', user: customer })
+        } else {
+            res.status(400).json({ success: false, msg: 'User not found' })
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, msg: 'Server error' })
     }
 })
 

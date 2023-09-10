@@ -19,10 +19,12 @@ router.get('/:customerID', async (req, res) => {
 router.get("/:customerID/cart", async (req, res) => {
     const customerID = req.params.customerID;
     try {
-        const customer = await Customer.findById(customerID).populate({
-            path: 'shoppingCart',
-            populate: { path: 'product' }
-        });
+        const customer = await Customer.findById(customerID).populate(
+            {
+                path: 'shoppingCart',
+                populate: { path: 'product' }
+            }
+        );
         res.json({ success: true, msg: 'Retrieved shopping cart', shoppingCart: customer.shoppingCart });
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });
@@ -63,7 +65,7 @@ router.post("/:customerID/cart", async (req, res) => {
         customer.shoppingCart = [...customer.shoppingCart, newItem];
         await customer.save();
         await newItem.save();
-        const item = await CartItem.find({product: productID}).populate("product");
+        const item = await CartItem.find({ product: productID }).populate("product");
         res.json({ success: true, msg: 'New cart item added', item });
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });
@@ -102,11 +104,11 @@ router.delete("/:customerID/cart/:cartItemID", async (req, res) => {
 
 // Get all orders of customer
 router.get("/:customerID/order", async (req, res) => {
-    const customerID  = req.params.customerID;
+    const customerID = req.params.customerID;
     try {
-        const customer = await Customer.findOne({_id: customerID}).populate({
+        const customer = await Customer.findOne({ _id: customerID }).populate({
             path: 'orders',
-            populate: { 
+            populate: {
                 path: 'cartItems',
                 populate: 'product'
             }
