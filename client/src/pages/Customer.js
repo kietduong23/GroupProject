@@ -81,25 +81,27 @@ function Customer() {
             <div className='container'>
                 <LoginForm />
             </div>
-            <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
-            <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
+            <div className='container body'>
+                <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
+                <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
 
-            <div className='container main'>
-                <div className='filter-box'>
-                    <h3>Filter by category</h3>
-                    <ul>
-                        {spans.map((span, index) => (
-                            <li key={index} id={span.id}
-                                onClick={() => handleSpanChange(span)}
-                                className={span.id == active ? active : 'deactive'}>{span.text}</li>
-                        ))}
-                    </ul>
-                    <div className="d-flex">
-                        <input className="form-control me-2" type="text" placeholder="Search" onChange={handleSearchKeyChange} />
+                <div className='container products'>
+                    <div className='filter-box'>
+                        <h3>Filter by category</h3>
+                        <ul>
+                            {spans.map((span, index) => (
+                                <li key={index} id={span.id}
+                                    onClick={() => handleSpanChange(span)}
+                                    className={span.id == active ? active : 'deactive'}>{span.text}</li>
+                            ))}
+                        </ul>
+                        <div className='container search-box'>
+                            <input type="text" onChange={handleSearchKeyChange} />
+                        </div>
                     </div>
 
 
-
+                
 
                 {filteredProducts.length > 0 && (
                     <div className='my-products'>
@@ -139,27 +141,27 @@ function Customer() {
                 )}
 
 
-
+                
             </div>
 
             <div className='container shopping-cart'>
-                <h2>My Shopping Cart</h2>
-                <div className='container'>
-                    <div>
-                        <ShoppingCart />
+                    <h2>My Shopping Cart</h2>
+                    <div className='container'>
+                        <div>
+                            <ShoppingCart />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className='container orders'>
-                <h2>My Order List</h2>
-                <div className='container'>
-                    <div>
-                        <OrderList />
+                <div className='container orders'>
+                    <h2>My Order List</h2>
+                    <div className='container'>
+                        <div>
+                            <OrderList />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     );
 }
