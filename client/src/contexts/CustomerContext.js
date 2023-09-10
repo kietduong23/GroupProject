@@ -91,9 +91,10 @@ const CustomerContextProvider = ({ children }) => {
             const res = await axios.post(`${API_URL}/customers/${user._id}/cart`, { productID: product._id, quantity: 1 })
             if (res.data.success) {
                 const newCartItem = res.data.item;
-                setShoppingCart([...shoppingCart, newCartItem]);
+                // setShoppingCart([...shoppingCart, newCartItem]);
                 let newTotal = totalPrice + newCartItem.product.price;
                 setTotalPrice(newTotal);
+                loadShoppingCart();
                 // saveShoppingCart(newCart);
             }
             return res.data;
@@ -293,10 +294,11 @@ const CustomerContextProvider = ({ children }) => {
                 const res = await axios.post(`${API_URL}/orders`, { customerID: user._id });
                 if (res.data.success) {
                     const newOrderList = [...orders, res.data.newOrder];
-                    setOrders(newOrderList);
+                    // setOrders(newOrderList);
                     setShoppingCart([]);
                     saveShoppingCart([]);
                     console.log(newOrderList);
+                    loadOrders();
                 }
             } catch (error) {
                 // if (error.response.data) {
