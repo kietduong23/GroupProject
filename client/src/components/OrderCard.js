@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CustomerContext } from '../contexts/CustomerContext';
 
-function OrderCard({ items, status }) {
+function OrderCard({ items, status, order }) {
+    const {acceptOrder, rejectOrder} = useContext(CustomerContext);
     return (
         <div className='card'>
             <div className='card-body'>
@@ -19,10 +21,10 @@ function OrderCard({ items, status }) {
                 <div>
                     {(status === 'Shipped') ? (
                         <div>
-                            <button className='btn btn-success'>Accept</button>
-                            <button className='btn btn-danger'>Reject</button>
+                            <button className='btn btn-success' onClick={() => acceptOrder(order._id)}>Accept</button>
+                            <button className='btn btn-danger' onClick={() => rejectOrder(order._id)}>Reject</button>
                         </div>
-                    ) : (<div className=''>Your order has been processing</div>)}
+                    ) : (<></>)}
                 </div>
             </div>
         </div>
