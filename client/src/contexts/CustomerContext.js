@@ -83,15 +83,23 @@ const CustomerContextProvider = ({ children }) => {
     }
 
     const handleAddToCart = async (product) => {
-        try {
-            const res = await axios.post(`${API_URL}/customers/${user._id}/cart`, { productID: product._id, quantity: 1 })
-            if (res.data.success) {
-                saveShoppingCart(res.data.cart);
-                await loadShoppingCart();
+        if (user !== null) {
+            try {
+                const res = await axios.post(`${API_URL}/customers/${user._id}/cart`, { productID: product._id, quantity: 1 })
+                if (res.data.success) {
+                    saveShoppingCart(res.data.cart);
+                    await loadShoppingCart();
+                }
+                return res.data;
+            } catch (error) {
+                return { success: false, msg: error.message }
             }
-            return res.data;
-        } catch (error) {
-            return { success: false, msg: error.message }
+        } else {
+            const existingProduct = shoppingCart.find((item) => item.product._id === product._id);
+            if (existingProduct === undefined) {
+                const newCart = [...shoppingCart, { _id: product._id, product: product, quantity: 1 }];
+                saveShoppingCart(newCart);
+            }
         }
     }
 
@@ -106,6 +114,8 @@ const CustomerContextProvider = ({ children }) => {
             } catch (error) {
                 return { success: false, msg: error.message }
             }
+        } else {
+            saveShoppingCart([]);
         }
     }
 
@@ -127,6 +137,15 @@ const CustomerContextProvider = ({ children }) => {
             } catch (error) {
                 return { success: false, msg: error.message }
             }
+        } else {
+            const newCart = shoppingCart.filter((item) => {
+                if (item._id !== itemID) {
+                    return item;
+                } else {
+                    return null;
+                }
+            });
+            saveShoppingCart(newCart);
         }
     }
 
@@ -137,7 +156,7 @@ const CustomerContextProvider = ({ children }) => {
                 if (res.data.success) {
                     const newCart = shoppingCart.map((item) => {
                         if (item._id === itemID) {
-                            
+
                             item.quantity = item.quantity + 1;
                         }
                         return ({ ...item });
@@ -147,6 +166,14 @@ const CustomerContextProvider = ({ children }) => {
             } catch (error) {
                 return { success: false, msg: error.message }
             }
+        } else {
+            const newCart = shoppingCart.map((item) => {
+                if (item._id === itemID) {
+                    item.quantity = item.quantity + 1;
+                }
+                return ({ ...item });
+            });
+            saveShoppingCart(newCart);
         }
     }
 
@@ -168,6 +195,16 @@ const CustomerContextProvider = ({ children }) => {
                     return { success: false, msg: error.message }
                 }
             }
+        } else {
+            const newCart = shoppingCart.map((item) => {
+                if (item._id === itemID) {
+                    if (item.quantity > 1) {
+                        item.quantity = item.quantity - 1;
+                    }
+                }
+                return ({ ...item })
+            });
+            saveShoppingCart(newCart);
         }
     }
 
@@ -197,6 +234,28 @@ const CustomerContextProvider = ({ children }) => {
         }
     }
 
+    const acceptOrder = async (orderID) => {
+        try {
+            const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Accepted" });
+            if (res.data.success) {
+                await loadOrders();
+            }
+        } catch (error) {
+            return { success: false, msg: error.message }
+        }
+    }
+
+    const rejectOrder = async (orderID) => {
+        try {
+            const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Rejected" });
+            if (res.data.success) {
+                await loadOrders();
+            }
+        } catch (error) {
+            return { success: false, msg: error.message }
+        }
+    }
+
     const customerData = {
         shoppingCart,
         totalPrice,
@@ -208,7 +267,9 @@ const CustomerContextProvider = ({ children }) => {
         handleItemDecrease,
         handlePlaceOrder,
         handlePlaceOrder,
-        handleCustomerLogout
+        handleCustomerLogout,
+        rejectOrder,
+        acceptOrder
     }
     return (
         <CustomerContext.Provider value={customerData}>{children}</CustomerContext.Provider>
