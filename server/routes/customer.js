@@ -52,9 +52,12 @@ router.post("/:customerID/cart", async (req, res) => {
     const { productID } = req.body;
     const customerID = req.params.customerID;
     try {
-        const customer = await Customer.findById(customerID).populate("shoppingCart");
+        const customer = await Customer.findById(customerID).populate({
+            path: 'shoppingCart',
+            populate: {path : 'product'}
+        });
         for (let item of customer.shoppingCart) {
-            if (item.product == productID) {
+            if (item.product._id == productID) {
                 return res.status(400).json({ success: false, msg: 'Product already existed' });
             }
         }
@@ -65,8 +68,8 @@ router.post("/:customerID/cart", async (req, res) => {
         customer.shoppingCart = [...customer.shoppingCart, newItem];
         await customer.save();
         await newItem.save();
-        const item = await CartItem.find({ product: productID }).populate("product");
-        res.json({ success: true, msg: 'New cart item added', item });
+        // const item = await CartItem.find({ product: productID }).populate("product");
+        res.json({ success: true, msg: 'New cart item added', cart: customer.shoppingCart });
     } catch (error) {
         res.status(500).json({ success: false, msg: 'Server error' });
     }
