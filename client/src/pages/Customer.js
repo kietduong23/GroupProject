@@ -29,6 +29,8 @@ function Customer() {
     // category state
     const [category, setCategory] = useState('');
 
+    const [searchKey, setSearchKey] = useState('');
+
     // handle change ... it will set category and active states
     const handleSpanChange = (individualSpan) => {
         setActive(individualSpan.id);
@@ -57,6 +59,11 @@ function Customer() {
         setFilteredProducts([]);
     }
 
+    const handleSearchKeyChange = (e) => {
+        setSearchKey(e.target.value)
+        console.log(e.target.value)
+    }
+
     const handleLogout = () => handleCustomerLogout()
 
     return (
@@ -82,7 +89,7 @@ function Customer() {
                 </div>
 
                 <div className='container search-box'>
-                    <input type="text" />
+                    <input type="text" onChange={handleSearchKeyChange}/>
                 </div>
 
                 <div className='container all-products'>
