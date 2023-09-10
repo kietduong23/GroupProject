@@ -67,30 +67,31 @@ function Customer() {
     const handleLogout = () => handleCustomerLogout()
 
     return (
-        <div className='container'>
+        <div className='main'>
             {/* <div className='container'>
                 <RegisterForm />
             </div> */}
             {/* <div className='container'>
                 <LoginForm />
             </div> */}
-            <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
-            <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
+            <div className='container body'>
+                <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
+                <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
 
-            <div className='container main'>
-                <div className='filter-box'>
-                    <h3>Filter by category</h3>
-                    <ul>
-                        {spans.map((span, index) => (
-                            <li key={index} id={span.id}
-                                onClick={() => handleSpanChange(span)}
-                                className={span.id == active ? active : 'deactive'}>{span.text}</li>
-                        ))}
-                    </ul>
-                    <div className='container search-box'>
-                        <input type="text" onChange={handleSearchKeyChange} />
+                <div className='container products'>
+                    <div className='filter-box'>
+                        <h3>Filter by category</h3>
+                        <ul>
+                            {spans.map((span, index) => (
+                                <li key={index} id={span.id}
+                                    onClick={() => handleSpanChange(span)}
+                                    className={span.id == active ? active : 'deactive'}>{span.text}</li>
+                            ))}
+                        </ul>
+                        <div className='container search-box'>
+                            <input type="text" onChange={handleSearchKeyChange} />
+                        </div>
                     </div>
-                </div>
 
 
                 
@@ -153,6 +154,7 @@ function Customer() {
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     );
 }

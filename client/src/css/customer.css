@@ -1,4 +1,18 @@
-.main{
+:root {
+    --main-color: linear-gradient(135deg, #fa8100, #fc1eb7);
+    --color-dark: #1d2231;
+    --text-grey: #8390a2;
+}
+
+.main {
+    width: 100%;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.body{
+    background: white;
+}
+.products{
     display: flex;
     width: 100%;
 }
