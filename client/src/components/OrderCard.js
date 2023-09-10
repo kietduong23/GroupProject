@@ -8,7 +8,7 @@ function OrderCard({ items, status, order }) {
             <div className='card-body'>
                 <div className='card-title'>Items:</div>
                 {items.map((item) =>
-                    <div>
+                    <div key={item._id}>
                         <div className='card-text'>
                             Name: {item.product.name}
                         </div>

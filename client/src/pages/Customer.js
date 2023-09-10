@@ -89,48 +89,46 @@ function Customer() {
                 </div>
 
                 <div className='container search-box'>
-                    <input type="text" onChange={handleSearchKeyChange}/>
+                    <input type="text" onChange={handleSearchKeyChange} />
                 </div>
 
-                <div className='container all-products'>
-                    {filteredProducts.length > 0 && (
-                        <div className='my-products'>
-                            <h2>Category: {category}</h2>
-                            <button className="btn btn-link" onClick={returntoAllProducts}>Return to All Products</button>
-                            <div className="container">
-                                <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
-                                    {filteredProducts.map(product => (
-                                        <div className="p-3" key={product._id}>
-                                            <ProductCard className="col" product={product} />
-                                        </div>
-                                    ))}
-                                </div>
+                {filteredProducts.length > 0 && (
+                    <div className='my-products'>
+                        <h2>Category: {category}</h2>
+                        <button className="btn btn-link" onClick={returntoAllProducts}>Return to All Products</button>
+                        <div className="container">
+                            <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
+                                {filteredProducts.map(product => (
+                                    <div className="p-3" key={product._id}>
+                                        <ProductCard className="col" product={product} />
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    )}
-                    {filteredProducts.length < 1 && (
-                        <>
-                            {products.length > 0 && (
-                                <div className='my-products'>
-                                    <h2>All Products</h2>
-                                    <div className="container">
-                                        <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
-                                            {products.map(product => (
-                                                <div className="p-3" key={product.id}>
-                                                    <ProductCard className="col" product={product} />
-                                                </div>
-                                            ))}
-                                        </div>
+                    </div>
+                )}
+                {filteredProducts.length < 1 && (
+                    <>
+                        {products.length > 0 && (
+                            <div className='my-products'>
+                                <h2>All Products</h2>
+                                <div className="container">
+                                    <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
+                                        {products.map(product => (
+                                            <div className="p-3" key={product._id}>
+                                                <ProductCard className="col" product={product} />
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
-                            )}
-                            {products.length < 1 && (
-                                <div className='my-products please-wait'>Please wait...</div>
-                            )}
-                        </>
-                    )}
+                            </div>
+                        )}
+                        {products.length < 1 && (
+                            <div className='my-products please-wait'>Please wait...</div>
+                        )}
+                    </>
+                )}
 
-                </div>
 
                 <div className='container shopping-cart'>
                     <h2>My Shopping Cart</h2>
