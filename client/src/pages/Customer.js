@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 // import RegisterForm from '../components/RegisterForm'
+import 'bootstrap/dist/css/bootstrap.css';
 import LoginForm from '../components/LoginForm'
 import ProductCard from '../components/ProductCard'
 import ShoppingCart from '../components/ShoppingCart'
@@ -7,6 +8,7 @@ import { ProductContext } from '../contexts/ProductContext'
 import { AuthContext } from '../contexts/AuthContext'
 import OrderList from '../components/OrderList'
 import { CustomerContext } from '../contexts/CustomerContext'
+import '../css/customer.css'
 
 function Customer() {
     const { products } = useContext(ProductContext);
@@ -62,13 +64,13 @@ function Customer() {
             {/* <div className='container'>
                 <RegisterForm />
             </div> */}
-            <div className='container'>
+            {/* <div className='container'>
                 <LoginForm />
-            </div>
-
+            </div> */}
             <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
             <div className="container">{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
-            <div className='container filter-box'>
+            <div className='container-fluid main'>
+            <div className='filter-box'>
                 <h3>Filter by category</h3>
                 <ul>
                     {spans.map((span, index) => (
@@ -79,13 +81,12 @@ function Customer() {
                 </ul>
             </div>
 
-            <div className='container all-products'>
-                {filteredProducts.length > 0 && (
+            {filteredProducts.length > 0 && (
                     <div className='my-products'>
                         <h2>Category: {category}</h2>
                         <button className="btn btn-link" onClick={returntoAllProducts}>Return to All Products</button>
                         <div className="container">
-                            <div className='products-box row-cols-1 row-cols-sm-2 row-cols-lg-3'>
+                            <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
                                 {filteredProducts.map(product => (
                                     <div className="p-3" key={product._id}>
                                         <ProductCard className="col" product={product} />
@@ -115,7 +116,8 @@ function Customer() {
                             <div className='my-products please-wait'>Please wait...</div>
                         )}
                     </>
-                )}
+                )}                
+            
             </div>
 
             <div className='container shopping-cart'>

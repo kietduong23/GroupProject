@@ -1,4 +1,5 @@
 import './App.css';
+import './css/customer.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import Customer from './pages/Customer';
 import ProductsContextProvider from './contexts/ProductContext';
