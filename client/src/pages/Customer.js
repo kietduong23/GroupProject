@@ -48,7 +48,7 @@ function Customer() {
             setFilteredProducts(filter);
         }
         else {
-            console.log('no products to filter')
+            console.log('No products to filter')
         }
     }
 
@@ -60,8 +60,15 @@ function Customer() {
     }
 
     const handleSearchKeyChange = (e) => {
-        setSearchKey(e.target.value)
-        console.log(e.target.value)
+        if (products.length > 1) {
+            const searchKey = e.target.value.trim();
+            if (searchKey !== '') {
+                const filtered = products.filter((product) => product.name.toLowerCase().includes(searchKey.toLowerCase()));
+                setFilteredProducts(filtered);
+            } else {
+                setFilteredProducts([]);
+            }
+        }
     }
 
     const handleLogout = () => handleCustomerLogout()
@@ -71,30 +78,28 @@ function Customer() {
             {/* <div className='container'>
                 <RegisterForm />
             </div> */}
-            {/* <div className='container'>
+            <div className='container'>
                 <LoginForm />
-            </div> */}
-            <div className='container body'>
-                <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
-                <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
+            </div>
+            <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
+            <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
 
-                <div className='container products'>
-                    <div className='filter-box'>
-                        <h3>Filter by category</h3>
-                        <ul>
-                            {spans.map((span, index) => (
-                                <li key={index} id={span.id}
-                                    onClick={() => handleSpanChange(span)}
-                                    className={span.id == active ? active : 'deactive'}>{span.text}</li>
-                            ))}
-                        </ul>
-                        <div className='container search-box'>
-                            <input type="text" onChange={handleSearchKeyChange} />
-                        </div>
+            <div className='container main'>
+                <div className='filter-box'>
+                    <h3>Filter by category</h3>
+                    <ul>
+                        {spans.map((span, index) => (
+                            <li key={index} id={span.id}
+                                onClick={() => handleSpanChange(span)}
+                                className={span.id == active ? active : 'deactive'}>{span.text}</li>
+                        ))}
+                    </ul>
+                    <div className="d-flex">
+                        <input className="form-control me-2" type="text" placeholder="Search" onChange={handleSearchKeyChange} />
                     </div>
 
 
-                
+
 
                 {filteredProducts.length > 0 && (
                     <div className='my-products'>
@@ -134,27 +139,27 @@ function Customer() {
                 )}
 
 
-                
+
             </div>
 
             <div className='container shopping-cart'>
-                    <h2>My Shopping Cart</h2>
-                    <div className='container'>
-                        <div>
-                            <ShoppingCart />
-                        </div>
-                    </div>
-                </div>
-
-                <div className='container orders'>
-                    <h2>My Order List</h2>
-                    <div className='container'>
-                        <div>
-                            <OrderList />
-                        </div>
+                <h2>My Shopping Cart</h2>
+                <div className='container'>
+                    <div>
+                        <ShoppingCart />
                     </div>
                 </div>
             </div>
+
+            <div className='container orders'>
+                <h2>My Order List</h2>
+                <div className='container'>
+                    <div>
+                        <OrderList />
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     );
 }
