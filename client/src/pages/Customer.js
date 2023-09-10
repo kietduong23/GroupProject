@@ -48,7 +48,7 @@ function Customer() {
             setFilteredProducts(filter);
         }
         else {
-            console.log('no products to filter')
+            console.log('No products to filter')
         }
     }
 
@@ -60,8 +60,15 @@ function Customer() {
     }
 
     const handleSearchKeyChange = (e) => {
-        setSearchKey(e.target.value)
-        console.log(e.target.value)
+        if (products.length > 1) {
+            const searchKey = e.target.value.trim();
+            if (searchKey !== '') {
+                const filtered = products.filter((product) => product.name.toLowerCase().includes(searchKey.toLowerCase()));
+                setFilteredProducts(filtered);
+            } else {
+                setFilteredProducts([]);
+            }
+        }
     }
 
     const handleLogout = () => handleCustomerLogout()
@@ -87,13 +94,13 @@ function Customer() {
                                 className={span.id == active ? active : 'deactive'}>{span.text}</li>
                         ))}
                     </ul>
-                    <div className='container search-box'>
-                        <input type="text" onChange={handleSearchKeyChange} />
+                    <div className="d-flex">
+                        <input className="form-control me-2" type="text" placeholder="Search" onChange={handleSearchKeyChange} />
                     </div>
                 </div>
 
 
-                
+
 
                 {filteredProducts.length > 0 && (
                     <div className='my-products'>
@@ -133,26 +140,26 @@ function Customer() {
                 )}
 
 
-                
+
             </div>
 
             <div className='container shopping-cart'>
-                    <h2>My Shopping Cart</h2>
-                    <div className='container'>
-                        <div>
-                            <ShoppingCart />
-                        </div>
+                <h2>My Shopping Cart</h2>
+                <div className='container'>
+                    <div>
+                        <ShoppingCart />
                     </div>
                 </div>
+            </div>
 
-                <div className='container orders'>
-                    <h2>My Order List</h2>
-                    <div className='container'>
-                        <div>
-                            <OrderList />
-                        </div>
+            <div className='container orders'>
+                <h2>My Order List</h2>
+                <div className='container'>
+                    <div>
+                        <OrderList />
                     </div>
                 </div>
+            </div>
         </div>
     );
 }
