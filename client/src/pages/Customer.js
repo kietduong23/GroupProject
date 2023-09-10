@@ -71,9 +71,9 @@ function Customer() {
             {/* <div className='container'>
                 <RegisterForm />
             </div> */}
-            {/* <div className='container'>
+            <div className='container'>
                 <LoginForm />
-            </div> */}
+            </div>
             <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
             <div className="container">{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
             <div className='container-fluid main'>
@@ -89,7 +89,8 @@ function Customer() {
                 </div>
 
                 <div className='container search-box'>
-                    <input type="text" onChange={handleSearchKeyChange} />
+                    <input className="form-control mr-sm-2" placeholder="Search" onChange={handleSearchKeyChange} />
+                    <button className="btn btn-outline-success" >Search</button>
                 </div>
 
                 {filteredProducts.length > 0 && (
