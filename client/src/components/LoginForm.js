@@ -104,7 +104,7 @@ function LoginForm() {
         </div>
       </div>
       </>) :
-        (<Navigate to="/customer" replace />)
+        (<Navigate to="/" replace />)
       }
     </>
   )

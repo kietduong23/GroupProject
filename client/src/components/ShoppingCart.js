@@ -11,6 +11,7 @@ function ShoppingCart() {
     } = useContext(CustomerContext);
     return (
         <>
+            <h2>My shopping cart</h2>
             <div className="cart-items overflow-auto border" style={{ height: '250px' }}>
                 {(shoppingCart.length > 0) ? shoppingCart.map((item) => 
                 <div className="p-2" key={item._id}>

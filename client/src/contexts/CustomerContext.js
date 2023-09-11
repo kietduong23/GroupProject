@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { createContext } from "react";
+import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
+
 const API_URL = 'http://localhost:8000';
 const SHOPPING_CART_NAME = "MY-SHOPPING-CART";
 
 export const CustomerContext = createContext();
 
-const CustomerContextProvider = ({ children }) => {
+const CustomerContextProvider = () => {
     const { authState, doLogout } = useContext(AuthContext);
     const { user } = authState;
     const [shoppingCart, setShoppingCart] = useState([]);
@@ -274,7 +276,7 @@ const CustomerContextProvider = ({ children }) => {
         acceptOrder
     }
     return (
-        <CustomerContext.Provider value={customerData}>{children}</CustomerContext.Provider>
+        <CustomerContext.Provider value={customerData}><Outlet/></CustomerContext.Provider>
     )
 }
 
