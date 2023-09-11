@@ -20,8 +20,7 @@ router.post("/", async (req, res) => {
         const customer = await Customer.findById(customerID);
         const newOrder = new Order({
             cartItems: customer.shoppingCart,
-            customer: customerID,
-            status: "New"
+            customer: customerID
         });
         await newOrder.save();
         customer.orders = [...customer.orders, newOrder];
