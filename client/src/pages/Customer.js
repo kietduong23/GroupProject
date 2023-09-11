@@ -78,9 +78,9 @@ function Customer() {
             {/* <div className='container'>
                 <RegisterForm />
             </div> */}
-            <div className='container'>
+            {/* <div className='container'>
                 <LoginForm />
-            </div>
+            </div> */}
             <div className='container body'>
                 <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
                 <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>

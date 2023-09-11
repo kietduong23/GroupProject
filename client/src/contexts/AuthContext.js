@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { createContext } from "react";
+import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 const API_URL = 'http://localhost:8000';
 
 export const AuthContext = createContext();
 
-const AuthContextProvider = ({ children }) => {
+const AuthContextProvider = () => {
     const [authState, setAuthState] = useState({
         user: null,
         isAuthenticated: false,
@@ -61,7 +62,7 @@ const AuthContextProvider = ({ children }) => {
     const authData = { authState, doCustomerLogin, doLogout }
     
     return (
-        <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={authData}><Outlet/></AuthContext.Provider>
     )
 }
 

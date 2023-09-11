@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { doLogin } from '../api/customers'
 import { AuthContext } from '../contexts/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 function LoginForm() {
+  const { authState } = useContext(AuthContext);
+  const { isAuthenticated } = authState;
   const [loginData, setLoginData] = useState(
     {
       email: '',
@@ -85,7 +88,8 @@ function LoginForm() {
     </form>
   return (
     <>
-      <div className='card' style={{ width: '400px' }}>
+      {(!isAuthenticated) ? (<>
+        <div className='card' style={{ width: '400px' }}>
         <div className='card-body'>
           <h3 className='card-title'>Customer Login</h3>
           <div className="form-group mb-2">
@@ -99,7 +103,9 @@ function LoginForm() {
           <div className='message'>{message}</div>
         </div>
       </div>
-
+      </>) :
+        (<Navigate to="/customer" replace />)
+      }
     </>
   )
 }

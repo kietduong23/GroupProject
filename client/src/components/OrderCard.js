@@ -12,7 +12,7 @@ function OrderCard({ items, order }) {
                         <div key={item._id} className='container mb-2'>
                             <div className='row'>
                                 <div className='card-text col'>
-                                    Name: {item.product.name}
+                                    Product: {item.product.name}
                                 </div>
                                 <div className='card-text col'>
                                     Quantity: {item.quantity}
