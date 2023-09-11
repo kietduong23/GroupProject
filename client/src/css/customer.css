@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
 :root {
     --main-color: linear-gradient(135deg, #fa8100, #fc1eb7);
     --color-dark: #1d2231;
@@ -11,6 +19,7 @@
 
 .body{
     background: white;
+    height: 1000px;
 }
 .products{
     display: flex;
@@ -20,6 +29,7 @@
 .filter-box{
     float: left;
     width: 25%;
+    margin-top: 10px;
 }
 
 .my-products{
@@ -31,4 +41,25 @@
 
 .product card-img-top{
     align-items: center;
+}
+
+.main-title {
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+}
+
+.main-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.products-box .title{
+    font-size: large;
+    font-weight: bold;
 }

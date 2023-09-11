@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { doLogin } from '../api/customers'
 import { AuthContext } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
-
+import '../css/signin.css'
 function LoginForm() {
   const { authState } = useContext(AuthContext);
   const { isAuthenticated } = authState;
@@ -71,7 +71,9 @@ function LoginForm() {
         <label htmlFor="loginPassword">Password:</label>
         <input onChange={onLoginDataChange} type="password" className="form-control" id="loginPassword" name="password" placeholder="Enter your password" value={loginData.password} />
       </div>
-      <button type="submit" className="btn btn-primary">Login</button>
+  
+      <button type="submit" className='button'>Login</button>
+  
     </form>
 
   const phoneLoginForm =
@@ -84,25 +86,25 @@ function LoginForm() {
         <label htmlFor="loginPassword">Password:</label>
         <input onChange={onLoginDataChange} type="password" className="form-control" id="loginPassword" name="password" placeholder="Enter your password" value={loginData.password} />
       </div>
-      <button type="submit" className="btn btn-primary">Login</button>
+      <button type="submit" className="button">Login</button>
     </form>
   return (
     <>
       {(!isAuthenticated) ? (<>
-        <div className='card' style={{ width: '400px' }}>
-        <div className='card-body'>
-          <h3 className='card-title'>Customer Login</h3>
-          <div className="form-group mb-2">
-            <label htmlFor="loginMethod">Select your login method</label>
-            <select onChange={onLoginMethodChange} className="form-control" id="loginMethod">
-              <option value="emailLogin" name="emailLogin">By email</option>
-              <option value="phoneLogin" name="phoneLogin">By phone number</option>
-            </select>
+        <div className='sign-in-main'>
+          <div className='sign-in-container'>
+            <div className='title'>Sign In</div>
+              <div className="form-group mb-2">
+                <label htmlFor="loginMethod">Select your login method</label>
+                <select onChange={onLoginMethodChange} className="form-control" id="loginMethod">
+                  <option value="emailLogin" name="emailLogin">By email</option>
+                  <option value="phoneLogin" name="phoneLogin">By phone number</option>
+                </select>
+              </div>
+            {(loginMethod === 'emailLogin') ? emailLoginForm : phoneLoginForm}
+            <div className='message'>{message}</div>
           </div>
-          {(loginMethod === 'emailLogin') ? emailLoginForm : phoneLoginForm}
-          <div className='message'>{message}</div>
         </div>
-      </div>
       </>) :
         (<Navigate to="/" replace />)
       }

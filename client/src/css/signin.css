@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sign-in-main {
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.sign-in-container {
+    max-width: 500px;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+}
+
+.sign-in-container .dropdown {
+    max-width: 200px;
+    width: 100%;
+    height: 30px;
+}
+
+.sign-in-container .title {
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+}
+
+.sign-in-container .title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.sign-in-container form .user-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sign-in-container form .user-details .input-field {
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.sign-in-container .user-details .input-field input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-right-width: 2px;
+    border-bottom-width: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.sign-in-container .user-details .input-field .details {
+    display: block;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.sign-in-container .user-details .input-field input:focus,
+.sign-in-container .user-details .input-field input:valid {
+    border-color: #fc1eb7;
+}
+
+.sign-in-container form .user-type {
+    margin-top: 10px;
+}
+
+.sign-in-container form .user-type .user-type-title {
+    font-size: 20px;
+    font-weight: 450;
+}
+
+.sign-in-container form .user-type .category {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 14px 0;
+}
+
+.sign-in-container .user-type .category label {
+    display: flex;
+    align-items: center;
+}
+
+.sign-in-container .user-type .category .dot {
+    height: 20px;
+    width: 20px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 5px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.sign-in-container #dot-1:checked ~ .category label .one, 
+.sign-in-container #dot-2:checked ~ .category label .two,
+.sign-in-container #dot-3:checked ~ .category label .three {
+    border-color: #d9d9d9;
+    background: #fa8100
+}
+
+.sign-in-container form input[type="radio"] {
+    display: none;
+}
+
+.button {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.sign-in-container form .button input:hover {
+    background: linear-gradient(-135deg, #fa8100, #fc1eb7);
+}
+
+@media (max-width: 584px) {
+    .container {
+        max-width: 100%;
+    }
+
+    form .user-details .input-field {
+        margin: 10px 0 10px 0;
+        width: 100%;
+    }
+
+    form .user-type .category {
+        width: 100%
+    }
+
+    .container form .user-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .user-details::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.sign-in-container [aria-hidden="true"] {
+    display: none;
+}

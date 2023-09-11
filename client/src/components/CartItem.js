@@ -8,14 +8,14 @@ function CartItem({ item }) {
         handleItemRemove
     } = useContext(CustomerContext)
     return (
-        <div className='container card' key={item.product._id} style={{ width: '700px', height:'200px'}}>
+        <div className='container item-card' key={item.product._id} style={{ width: '700px', height:'200px'}}>
             <div className='row'>
                 <div className="col-sm-4">
                     <img src={item.product.imgURL} alt="product-img" className='card-img img-fluid p-2' style={{height:'200px'}}></img>
                 </div>
                 <div className="col-sm-8">
                     <div className='card-body'>
-                        <div className="product-text title card-title">Name: {item.product.name} </div>
+                        <div className="item-title">Name: {item.product.name} </div>
                         <div className='product-text description card-text'>Description: {item.product.description}</div>
                         <div className='product-text price card-text'>Price: ${item.product.price}</div>
                         <div className='d-flex'>

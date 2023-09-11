@@ -87,7 +87,7 @@ function Customer() {
 
                 <div className='container products'>
                     <div className='filter-box'>
-                        <h3>Filter by category</h3>
+                        <h4 className='s-title'>Filter by category</h4>
                         <ul>
                             {spans.map((span, index) => (
                                 <li key={index} id={span.id}
@@ -105,8 +105,8 @@ function Customer() {
 
                     {filteredProducts.length > 0 && (
                         <div className='my-products'>
-                            <h2>Category: {category}</h2>
-                            <button className="btn btn-link" onClick={returntoAllProducts}>Return to All Products</button>
+                            <div className='main-title'>{category? category: 'Search result'}</div>
+                            <button className="btn btn-link" onClick={returntoAllProducts} style={{ color: 'black'}}>Return to All Products</button>
                             <div className="container">
                                 <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
                                     {filteredProducts.map(product => (
@@ -122,7 +122,7 @@ function Customer() {
                         <>
                             {products.length > 0 && (
                                 <div className='my-products'>
-                                    <h2>All Products</h2>
+                                    <div className='main-title'>All Products</div>
                                     <div className="container">
                                         <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
                                             {products.map(product => (
