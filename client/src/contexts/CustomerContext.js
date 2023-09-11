@@ -234,9 +234,10 @@ const CustomerContextProvider = ({ children }) => {
         }
     }
 
-    const acceptOrder = async (orderID) => {
+    const acceptOrder = async (itemID) => {
         try {
-            const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Accepted" });
+            const res = await axios.put(`${API_URL}/customers/${user._id}/cart/${itemID}`, { status: "accepted" });
+            // const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Accepted" });
             if (res.data.success) {
                 await loadOrders();
             }
@@ -245,9 +246,10 @@ const CustomerContextProvider = ({ children }) => {
         }
     }
 
-    const rejectOrder = async (orderID) => {
+    const rejectOrder = async (itemID) => {
         try {
-            const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Rejected" });
+            const res = await axios.put(`${API_URL}/customers/${user._id}/cart/${itemID}`, { status: "rejected" });
+            // const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Rejected" });
             if (res.data.success) {
                 await loadOrders();
             }
