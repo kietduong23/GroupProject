@@ -75,14 +75,18 @@ router.post("/:customerID/cart", async (req, res) => {
     }
 })
 
-// Update item's quantity in shopping cart
+// Update item in shopping cart
 router.put("/:customerID/cart/:cartItemID", async (req, res) => {
-    const { quantity } = req.body;
+    const { quantity, status } = req.body;
     const cartItemID = req.params.cartItemID;
     try {
-
         const cartItem = await CartItem.findById(cartItemID);
-        cartItem.quantity = quantity;
+        if (quantity) {
+            cartItem.quantity = quantity;
+        }
+        if (status) {
+            cartItem.status = status;
+        }
         await cartItem.save();
         res.json({ success: true, msg: 'Cart is updated' });
     } catch (error) {
